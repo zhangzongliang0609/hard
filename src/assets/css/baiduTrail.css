@@ -1,0 +1,507 @@
+@charset "utf-8";
+/**
+ * 时间轴部分坐标
+ */
+
+.map_box {
+    user-select: none;
+}
+#map {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.rulerControl {
+    position: absolute;
+    width: 630px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .8);
+    /*right: 25px;*/
+    /*bottom: 35px;*/
+    box-shadow: 1px 1px 3px 1px #cbcbcb;
+    /*z-index: 1000;*/
+}
+.timeline {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.timelineControl {
+    width: 130px;
+    height: 100%;
+    float: left
+}
+.timelinePlay,
+.timelineSlow,
+.timelineQuick,
+.timelinePause {
+    float: left;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: 1
+}
+
+.timelinePlay {
+    width: 50px;
+    background-image: url("/static/images/play_2x_fa25689.png");
+    background-size: 40px 40px
+}
+
+.timelinePlay:hover {
+    background-image: url("/static/images/playhover_2x_f591e77.png")
+}
+
+.timelinePause {
+    width: 50px;
+    background-image: url("/static/images/pause_2x_f2c7329.png");
+    background-size: 40px 40px
+}
+
+.timelinePause:hover {
+    background-image: url("/static/images/pausehover_2x_8e2341e.png")
+}
+
+.timelineSlow {
+    width: 35px;
+    background-image: url("/static/images/slow_2x_2d13d8b.png");
+    background-size: 28px 28px
+}
+
+.timelineSlow:hover {
+    background-image: url("/static/images/slowhover_2x_e9ab905.png")
+}
+
+.timelineQuick {
+    width: 35px;
+    background-image: url("/static/images/quick_2x_2507c60.png");
+    background-size: 28px 28px
+}
+
+.timelineQuick:hover {
+    background-image: url("/static/images/quickhover_2x_ee12a70.png")
+}
+
+.timelineMain {
+    /*margin-left: 12px;*/
+    width: 481px;
+    float: left;
+    height: 100%;
+    position: relative;
+    cursor: pointer
+}
+.timelineMainMask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*background-color: #ccc;*/
+    z-index: 100000;
+}
+
+.timelineLabel {
+    position: absolute;
+    height: 30px;
+    width: 88px;
+    top: -33px;
+    margin-left: -44px;
+    z-index: 20
+}
+.timelineLabelcontent {
+    text-align: center;
+}
+.caliperPartA,
+.caliperPartB {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    background-color: rgba(40, 40, 40, .21);
+}
+
+.caliperPartA {
+    left: 0
+}
+
+.caliperPartB {
+    right: 0
+}
+
+.timelineLabelcontent {
+    width: 100%;
+    height: 25px;
+    background-color: rgba(0, 0, 0, .7);
+    border-radius: 2px;
+    color: #efefef;
+    line-height: 27px;
+    text-align: center;
+    font-size: 12px
+}
+
+.timelineLabelpointer {
+    height: 0;
+    width: 0;
+    border: 6px solid rgba(0, 0, 0, .7);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    margin-left: 38px
+}
+
+.timeHour {
+    height: 6px;
+    border-bottom: 1px solid #c2c2c4;
+    border-top: 1px solid #c2c2c4;
+    border-left: 1px solid #a3a3a4;
+    width: 19px;
+    float: left;
+    margin-top: 22px;
+    background-color: #c2c2c4
+}
+
+.caliperA,
+.caliperB {
+    height: 60px;
+    position: absolute;
+    width: 20px;
+    margin-left: -10px
+}
+
+.caliperPointerA,
+.caliperPointerB {
+    height: 0;
+    width: 0;
+    border: 10px solid #45a1f3;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    cursor: pointer
+}
+
+.caliperPointerA {
+    margin-left: -9px;
+    border-right-color: #45a1f3
+}
+
+.caliperPointerB {
+    margin-left: 9px;
+    border-left-color: #45a1f3
+}
+
+.caliperLine {
+    height: 50px;
+    width: 2px;
+    margin: 0 auto;
+    background-color: #45a1f3
+}
+
+.caliperA {
+    left: 0
+}
+
+.caliperB {
+    left: 721px
+}
+
+.timeHourFirst {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px
+}
+
+.timeHourFinal {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    /*border-right: 1px solid #a3a3a4*/
+}
+
+.timeNumber {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    font-size: 12px;
+    bottom: 2px;
+    color: #222;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+.timelineProgress {
+    background-image: url("/static/images/progress_77fdf59.png");
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    cursor: pointer;
+    top: 4px;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 10;
+    margin-left: -20px
+}
+
+.runPart {
+    background-color: #2398ff;
+    height: 8px;
+    top: 22px;
+    position: absolute;
+    border: 1px solid #218eef;
+    box-sizing: border-box;
+}
+
+/**
+ * 弹窗部分css
+ */
+
+.carInfoBox {
+    height: 221px;
+    width: 313px;
+    position: absolute;
+    z-index: 2001;
+    top: 0;
+    left: 0;
+    background: url("/static/images/infobox_91e843f.png");
+    /* display: none; */
+}
+
+.carInfoWindow {
+    width: 278px;
+    margin-left: 25px
+}
+
+.carInfoHeader0,
+.carInfoHeader1,
+.carInfoHeader2 {
+    height: 30px;
+    margin-top: 10px;
+    line-height: 30px;
+    font-size: 13px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 25px;
+    width: 225px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-size: 16px 14px
+}
+.monitorListItem0, .carInfoHeader0 {
+    background-image: url("/static/images/carrun_2x_62e7f26.png");
+    color: #333
+}
+
+.monitorListItem1, .carInfoHeader1 {
+    background-image: url("/static/images/carstatic_2x_7042a39.png");
+    color: #666
+}
+
+.monitorListItem2, .carInfoHeader2 {
+    background-image: url("/static/images/caroff_2x_67af8b7.png");
+    color: #999
+}
+.carInfoContent {
+    height: 140px;
+    width: 100%;
+    font-size: 12px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch
+}
+
+::-webkit-scrollbar {
+    width: 9px
+}
+
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .1)
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, .2)
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, .05)
+}
+
+.carInfoItem {
+    min-height: 30px;
+    width: 250px;
+    line-height: 30px;
+    float: left
+}
+
+.infoItemTitle {
+    color: #333;
+    width: 55px;
+    height: 100%;
+    float: left;
+    text-align: left;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.infoItemContent {
+    color: #666;
+    float: right;
+    width: 195px;
+    height: 100%
+}
+/**
+ * 速度控制部分
+ */
+.speedControl {
+    height: 220px;
+    width: 32px;
+    background-image: url("/static/images/speedcontrol_2x_d52b565.png");
+    cursor: pointer;
+    background-size: 32px 220px
+}
+/**
+ * 速度控制部分
+ */
+.zoomControl {
+    height: 64px;
+    width: 32px;
+    background: url("/static/images/zoom_59c2e93.png");
+    cursor: pointer
+}
+
+.zoomIn,
+.zoomOut {
+    height: 30px;
+    width: 32px;
+    margin-top: 1px
+}
+
+/**
+ * 行为分析部分
+ */
+.behavior {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 300px;
+    height: 125px;
+    z-index: 10;
+    overflow: hidden;
+}
+.behavior .behavior_title {
+    height: 40px;
+    padding: 0 15px;
+    line-height: 36px;
+    font-size: 16px;
+    background-color: #ddd;
+    color: #333;
+}
+.behavior .behavior_content {
+    padding: 10px 15px;
+    overflow: hidden;
+}
+.behavior .behavior_item {
+    width: 70px;
+    height: 64px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+}
+.behavior .behavior_item.harsh_steering {
+    border: 0 none;
+}
+.behavior .behavior_item.speeding {
+    width: 60px;
+}
+.behavior .behavior_item_number {
+    text-align: center;
+    font-size: 24px;
+    line-height: 40px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #666;
+}
+.behavior .behavior_item_select {
+    cursor: pointer;
+}
+.behavior .behavior_item_select_box {
+    width: 18px;
+    height: 18px;
+    margin: 3px 5px 0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: url("/static/images/bluen_84cf3fe.png") no-repeat 0 0;
+}
+.behavior .behavior_item_select_box:hover {
+    background: url("/static/images/bluen_84cf3fe.png") no-repeat -24px 0;
+}
+.behavior .behavior_item_name {
+    font-size: 12px;
+    line-height: 20px;
+}
+.behavior .behavior_item.active .behavior_item_number {
+    color: #1495ff;
+}
+.behavior .behavior_item.active .behavior_item_select_box {
+    background: url("/static/images/bluen_84cf3fe.png") no-repeat -48px 0;
+}
+.behaviorOverlay {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    z-index: 110;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border-radius: 10px;
+    color: #333;
+    font-size: 12px;
+    background-color: #fff;
+    line-height: 20px;
+    text-indent: 22px;
+    font-weight: 700;
+    transition: all .2s ease-in-out;
+    overflow: hidden;
+    user-select: none;
+}
+.behaviorOverlay.speeding {
+    background-image: url("/static/images/warning_d53b4cc.png");
+}
+.behaviorOverlay.harsh_acceleration {
+    background-image: url("/static/images/warning_d53b4cc.png");
+}
+.behaviorOverlay.harsh_breaking {
+    background-image: url("/static/images/warning_d53b4cc.png");
+}
+.behaviorOverlay.harsh_steering {
+    background-image: url("/static/images/warning_d53b4cc.png");
+}
+.behaviorOverlay.active {
+    z-index: 9999;
+}
+.behaviorOverlay.speeding.active {
+    width: 165px;
+}
+.behaviorOverlay.harsh_acceleration.active {
+    width: 75px;
+}
+.behaviorOverlay.harsh_breaking.active {
+    width: 75px;
+}
+.behaviorOverlay.harsh_steering.active {
+    width: 75px;
+}

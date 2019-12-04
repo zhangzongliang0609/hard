@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF</title>
+    <style>
+        body,html{
+            padding:0;
+            margin:0;
+            min-width: 1500px;
+        }
+        .content-box{
+            padding: 30px;
+        }
+        .company-name{
+            line-height: 120px;
+            font-size: 15px;
+            color: #000000;
+            /*font-weight:900;*/
+            float: left;
+
+        }
+        .title{
+            text-align: center;
+            font-size: 35px;
+        }
+        .text-c{
+            text-align: center;
+            font-size: 12px;
+        }
+        .person-list{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin:30px 0 ;
+        }
+        .person-item{
+            display: flex;
+            flex:1;
+            flex-direction: row;
+            /*width: 480px;*/
+            align-content: center;
+        }
+        .person-item div{
+            font-size: 22px;
+        }
+        .person-left{
+            font-size: 18px;
+            color: #cccccc;
+        }
+        .person-right{
+            width: 400px;
+            padding-left: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .blue{
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            border-radius: 10px;
+            background: #1a92f1;
+        }
+        .message-box{
+            min-width: 1200px;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            margin-bottom: 30px;
+        }
+        .message-content{
+            display: inline-block;
+            font-size: 20px;
+        }
+        .message-item{
+            min-width: 550px;
+        }
+        table{
+            width: 100%;
+        }
+        thead{
+
+            background: #ebecf0;
+        }
+        th{
+            height: 30px;
+            font-size: 14px;
+        }
+
+        .table-content{
+            background: #f9f9f9;
+        }
+        .table-content td{
+            line-height: 25px;
+            font-size: 20px;
+        }
+        .pad-table{
+            background: #0a0a0a;
+        }
+        .top-box{
+            /*display: flex;*/
+            /*justify-content: center;*/
+            background: url("./bg.png") no-repeat;
+            background-size:100% 100%;
+            height: 200px;
+            padding-left: 20px;
+            clear:both;
+        }
+        .company-logo{
+            width: 60px;
+            margin-top: 30px;
+            margin-right: 20px;
+            float: left;
+            /*height: 80px;*/
+        }
+        .total-price{
+            font-size: 26px;
+            text-align: right;
+        }
+
+    </style>
+
+</head>
+
+<body >
+
+<div id="pdfDom">
+    <div class="top-box">
+        <img src="../static/images/logo.png" class="company-logo"  crossorigin="anonymous" alt="">
+        <div class="company-name">拼吧科技</div>
+    </div>
+
+    <div class="content-box">
+
+        <div class="title"><span id="tripName">私车公用</span>-行程单</div>
+
+        <div class="text-c">PINBA TECHNOLOGY - TRIP TRABLE</div>
+
+        <div class="person-list">
+
+            <div class="person-item">
+                <div class="person-left">
+                    姓名:
+                </div>
+                <div class="person-right" id="realName"></div>
+            </div>
+
+            <div class="person-item">
+                <div class="person-left">
+                    工号:
+                </div>
+                <div class="person-right" id="jobNumber"></div>
+            </div>
+
+            <div class="person-item">
+                <div class="person-left">
+                    部门:
+                </div>
+                <div class="person-right" id="deparmentName"></div>
+            </div>
+
+        </div>
+
+        <div class="message-box">
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="applyTime"></span>
+            </div>
+
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="travelTime"></span>
+            </div>
+        </div>
+
+        <div class="message-box">
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="travelPersonPhone"></span>
+            </div>
+
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="totalContent"></span>
+            </div>
+        </div>
+
+        <table class="pad-table" id="pdfTable">
+            <thead class="text-c">
+            <tr>
+                <th width="30">序号</th>
+                <th width="150">开始时间</th>
+                <th width="150">结束时间</th>
+                <th width="200">起点</th>
+                <th width="200">终点</th>
+                <th width="70">里程(KM)</th>
+                <th width="70">停车费</th>
+                <th width="70">高速费</th>
+                <th width="70">油费</th>
+                <th width="70">其它费用</th>
+                <th width="70">总费用</th>
+                <th width="150">备注</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            <!--<tr class="text-c table-content" >-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--</tr>-->
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div id="voucherDom">
+    <div class="top-box">
+        <img src="../static/images/logo.png" class="company-logo" crossorigin="anonymous" alt="">
+        <div class="company-name">拼吧科技</div>
+    </div>
+
+    <div class="content-box">
+
+        <div class="title"><span id="voucherName">私车公用</span>-凭证单</div>
+
+        <div class="text-c">PINBA TECHNOLOGY - VOUCHER TRABLE</div>
+
+        <div class="person-list">
+
+            <div class="person-item">
+                <div class="person-left">
+                    姓名:
+                </div>
+                <div class="person-right" id="voucher-realName"></div>
+            </div>
+
+            <div class="person-item">
+                <div class="person-left">
+                    工号:
+                </div>
+                <div class="person-right" id="voucher-jobNumber"></div>
+            </div>
+
+            <div class="person-item">
+                <div class="person-left">
+                    部门:
+                </div>
+                <div class="person-right" id="voucher-deparmentName"></div>
+            </div>
+
+        </div>
+
+        <div class="message-box">
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="voucher-applyTime"></span>
+            </div>
+
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="voucher-travelTime"></span>
+            </div>
+        </div>
+
+        <div class="message-box">
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="voucher-travelPersonPhone"></span>
+            </div>
+
+            <div class="message-item">
+                <span class="blue"></span>
+                <span class="message-content" id="voucher-totalContent"></span>
+            </div>
+        </div>
+
+        <table class="pad-table" id="voucher-pdfTable">
+            <thead class="text-c">
+            <tr>
+                <th width="200">项目名称</th>
+                <th width="150">数量</th>
+                <th width="200">单价</th>
+                <th width="200">总金额</th>
+            </tr>
+            </thead>
+            <tbody id="voucher-tableBody">
+            <!--<tr class="text-c table-content" >-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--<td></td>-->
+            <!--</tr>-->
+            </tbody>
+        </table>
+
+
+        <div class="total-price" id="subsidyTotal">合计:</div>
+    </div>
+
+</div>
+
+
+
+
+<script src="../src/assets/js/html2canvas.js"></script>
+<script src="jspdf.min.js"></script>
+<script>
+
+    // 获取URL参数
+    var getUrlParams = (variable)=>{
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+
+
+
+    function getURLBase64(url) {
+        return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest()
+            xhr.open('get', url, true)
+            xhr.responseType = 'blob'
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    var blob = this.response
+                    var fileReader = new FileReader()
+                    fileReader.onloadend = function(e) {
+                        var result = e.target.result
+                        resolve(result)
+                    }
+                    fileReader.readAsDataURL(blob)
+                }
+            }
+            xhr.onerror = function() {
+                reject()
+            }
+            xhr.send()
+        })
+    }
+
+    // 下载PDF
+    var downPDF = function(domId,name){
+        html2canvas(document.querySelector('#' + domId), {
+            allowTaint: true,
+            useCORS:true,
+            imageTimeout:600000,
+        }).then(function (canvas) {
+            var contentWidth = canvas.width;
+            var contentHeight = canvas.height;
+            var pageHeight = contentWidth / 592.28 * 841.89;
+            var leftHeight = contentHeight
+            var position = 0
+            var imgWidth = 595.28
+            var imgHeight = 592.28 / contentWidth * contentHeight
+            var pageData = canvas.toDataURL('image/jpeg', 1.0)
+
+            var PDF = new jsPDF('', 'pt', 'a4')
+            if (leftHeight < pageHeight) {
+                PDF.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight)
+            } else {
+                while (leftHeight > 0) {
+                    PDF.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                    leftHeight -= pageHeight
+                    position -= 841.89
+                    if (leftHeight > 0) {
+                        PDF.addPage()
+                    }
+                }
+            }
+            PDF.save(name + '.pdf')
+        })
+    }
+
+    let domain = "https://api.pinbayun.com";
+    // let domain = "http://test.pinbayun.com:6090";
+    // let domain = "http://test.pinbayun.com:6090";
+    // let domain = "http://192.168.105.97:8000";
+    // let domain = "https://api.pinbayun.com";
+
+    function initTripForm(){
+        var  realName = document.getElementById("realName");
+        var  jobNumber = document.getElementById("jobNumber");
+        var  deparmentName = document.getElementById("deparmentName");
+        var  applyTime = document.getElementById("applyTime");
+        var  travelTime = document.getElementById("travelTime");
+        var  travelPersonPhone = document.getElementById("travelPersonPhone");
+        var  totalContent = document.getElementById("totalContent");
+        var  tableBody = document.getElementById("tableBody");
+
+        var  realNameVoucher = document.getElementById("voucher-realName");
+        var  jobNumberVoucher = document.getElementById("voucher-jobNumber");
+        var  deparmentNameVoucher = document.getElementById("voucher-deparmentName");
+        var  tripName = document.getElementById("tripName");
+        var  voucherName = document.getElementById("voucherName");
+        var  companyName = document.getElementsByClassName("company-name");
+        var  companyLogo = document.getElementsByClassName("company-logo");
+
+
+        var paramsId = getUrlParams("id");
+
+        var ajax = new XMLHttpRequest();
+        // ajax.open("GET", domain + "/api/v1/staff/privatecarvoucher/ff4e8e4f-7893-4db1-a573-51a4ab08c1e6/renderpdf/");
+        ajax.open("GET", domain + "/api/v1/staff/privatecarvoucher/"+paramsId+"/renderpdf/");
+        ajax.send();
+        ajax.onreadystatechange = function(){
+            if(ajax.readyState == 4 && ajax.status == 200){
+                var ajaxData = JSON.parse(ajax.responseText);
+                realName.innerText = ajaxData.staff_vo.real_name;
+                realNameVoucher.innerText = ajaxData.staff_vo.real_name;
+                jobNumber.innerText = ajaxData.staff_vo.job_number;
+                jobNumberVoucher.innerText = ajaxData.staff_vo.job_number;
+                deparmentName.innerText = ajaxData.staff_vo.department_name;
+                deparmentNameVoucher.innerText = ajaxData.staff_vo.department_name;
+                if(ajaxData.title){
+                    tripName.innerText = ajaxData.title;
+                }
+                if(ajaxData.voucher_title){
+                    voucherName.innerText = ajaxData.voucher_title;
+                }
+                if(ajaxData.name){
+                    companyName[0].innerText = ajaxData.name;
+                    companyName[1].innerText = ajaxData.name;
+                }
+                if(ajaxData.logo){
+                    getURLBase64(ajaxData.logo).then((data)=>{
+                        companyLogo[0].src = data;
+                        if(companyLogo[1].src){
+                            companyLogo[1].src = data;
+                        }
+                        downPDF('pdfDom',"行程单");
+                    })
+                }else{
+                    downPDF('pdfDom',"行程单");
+                }
+
+
+                initVoucherForm();
+                applyTime.innerText =  '申请时间 : ' + ajaxData.vourcher_vo.open_time;
+                travelTime.innerText =  '行程时间 : ' + ajaxData.vourcher_vo.start_date.slice(0,11) + '至' +ajaxData.vourcher_vo.end_date.slice(0,11);
+                travelPersonPhone.innerText = '行程人电话 : ' + ajaxData.vourcher_vo.phone;
+                var totalPrice = 0;
+                var tableHtml = "";
+                var totalMileage = 0;
+                for (var i = 0; i < ajaxData.order_list.length; i++) {
+                    var tableData = ajaxData.order_list[i];
+                    totalPrice += tableData.money;
+                    totalMileage += (+(tableData.order_mileage / 1000).toFixed(2));
+                    tableHtml += '<tr class="text-c table-content">' +
+                        '<td>'+(+i + 1)+'</td>' +
+                        '<td>'+tableData.ride_time+'</td>' +
+                        '<td>'+tableData.end_time+'</td>' +
+                        '<td>'+tableData.source_name+'</td>' +
+                        '<td>'+tableData.destination_name+'</td>' +
+                        '<td>'+(tableData.order_mileage < 0 ? 0 :tableData.order_mileage / 1000).toFixed(2)+'</td>' +
+                        '<td>'+(tableData.tcj ? tableData.tcj.toFixed(2) : 0)+'</td>' +
+                        '<td>'+(tableData.gsf ? tableData.gsf.toFixed(2) : 0)+'</td>' +
+                        '<td>'+(tableData.yf ? tableData.yf.toFixed(2) : 0)+'</td>' +
+                        '<td>'+(tableData.qt_fee ? tableData.qt_fee.toFixed(2) : 0)+'</td>' +
+                        '<td>'+(tableData.money ? tableData.money.toFixed(2) : 0)+'</td>' +
+                        '<td>'+ (tableData.remark ? tableData.remark : "") + '</td>' +
+                        '</tr>'
+                }
+                totalContent.innerText = '共' + ajaxData.order_list.length + '张行程,' + ' 行驶里程共' + totalMileage.toFixed(2) + ' 公里,' + ' 合计 : ' + (totalPrice.toFixed(2)) + " 元";
+                tableBody.innerHTML = tableHtml;
+                var trArr = document.getElementsByClassName("table-content");
+                var count = 0;
+
+                for (let i = 0; i < trArr.length; i++) {
+                    if(count == 0 && trArr[i].offsetTop >= 2100){
+                        let NewNode = document.createElement('tr');
+                        NewNode.className = "hall-tr";
+                        tableBody.insertBefore(NewNode,trArr[i]);
+                        count++;
+                    }else if(count != 0 && trArr[i].offsetTop >= (2100 + 2700 * count)){
+                        count++;
+                        let NewNode = document.createElement('tr');
+                        NewNode.className = "hall-tr";
+                        tableBody.insertBefore(NewNode,trArr[i]);
+                    }
+                }
+                // downPDF('pdfDom');
+            }
+        }
+    }
+
+    function initVoucherForm(){
+
+        var  applyTimeVoucher = document.getElementById("voucher-applyTime");
+        var  travelTimeVoucher = document.getElementById("voucher-travelTime");
+        var  travelPersonPhoneVoucher = document.getElementById("voucher-travelPersonPhone");
+        var  totalContentVoucher = document.getElementById("voucher-totalContent");
+        var  tableBodyVoucher = document.getElementById("voucher-tableBody");
+        var  subsidyTotal = document.getElementById("subsidyTotal");
+
+
+        var paramsId = getUrlParams("id");
+
+        var ajax = new XMLHttpRequest();
+        // ajax.open("GET", domain + "/api/v1/staff/privatecarvoucher/ff4e8e4f-7893-4db1-a573-51a4ab08c1e6/renderpdf/");
+        // ajax.open("GET", domain + "/api/v1/staff/privatecarvoucher/rendersubsidy/"+paramsId+"/renderpdf/");
+        // ajax.open("GET", domain + "/api/v1/staff/privatecarvoucher/"+paramsId+"/renderpdf/");
+        ajax.open("GET", domain + "/api/v1/staff/privatecarvoucher/rendersubsidy/?voucher="+paramsId);
+
+        ajax.send();
+        ajax.onreadystatechange = function(){
+            if(ajax.readyState == 4 && ajax.status == 200){
+                var subsidyData = JSON.parse(ajax.responseText);
+                if(subsidyData.order_cnt <= 0){
+                    document.getElementById("voucherDom").remove();
+                    return;
+                }
+                applyTimeVoucher.innerText =  '申请时间 : ' + subsidyData.voucher_vo.open_time;
+                travelTimeVoucher.innerText =  '行程时间 : ' + subsidyData.start_date.slice(0,11) + '至' +subsidyData.end_date.slice(0,11);
+                travelPersonPhoneVoucher.innerText = '行程人电话 : ' + subsidyData.voucher_vo.phone;
+                var totalPrice = 0;
+                var tableHtml = "";
+                var total = 0;
+                for (var i = 0; i < subsidyData.fees.length; i++) {
+                    var tableData = subsidyData.fees[i];
+                    totalPrice += tableData.fee;
+                    total += (+(tableData.order_mileage / 1000).toFixed(2));
+                    tableHtml += '<tr class="text-c table-content">' +
+                        '<td>'+tableData.name+'</td>' +
+                        '<td>'+tableData.cnt+'</td>' +
+                        '<td>'+(tableData.uprice ? tableData.uprice.toFixed(2) : "")+'</td>' +
+                        '<td>'+(tableData.fee ? tableData.fee.toFixed(2) : "")+'</td>' +
+                        '</tr>'
+                }
+                totalContentVoucher.innerText = '共' + subsidyData.order_cnt + '张行程,' + ' 行驶里程共' + (subsidyData.mileage / 1000).toFixed(2) + ' 公里';
+
+                subsidyTotal.innerText = "合计:" + (totalPrice.toFixed(2)) + "元";
+                tableBodyVoucher.innerHTML = tableHtml;
+                var trArr = tableBodyVoucher.getElementsByClassName("table-content");
+                var count = 0;
+
+                for (let i = 0; i < trArr.length; i++) {
+                    if(count == 0 && trArr[i].offsetTop >= 2100){
+                        let NewNode = document.createElement('tr');
+                        NewNode.className = "hall-tr";
+                        tableBodyVoucher.insertBefore(NewNode,trArr[i]);
+                        count++;
+                    }else if(count != 0 && trArr[i].offsetTop >= (2100 + 2700 * count)){
+                        count++;
+                        let NewNode = document.createElement('tr');
+                        NewNode.className = "hall-tr";
+                        tableBodyVoucher.insertBefore(NewNode,trArr[i]);
+                    }
+                }
+                downPDF('voucherDom',"凭证单");
+            }
+        }
+    }
+
+    initTripForm();
+
+
+
+</script>
+</body>
+</html>

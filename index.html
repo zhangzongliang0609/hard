@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理中心</title>
+
+</head>
+
+<body style="min-width: 1350px;">
+<link href="./src/assets/css/PB-ui.css" rel="stylesheet" type="text/css"/>
+<link href="./src/assets/css/PB-ui.admin.css" rel="stylesheet" type="text/css"/>
+<link href="./src/assets/fonts/pinba/iconfont.css" rel="stylesheet" type="text/css"/>
+<link href="./src/assets/css/skin/default/skin.css" rel="stylesheet" type="text/css"/>
+<link href="./src/assets/js/kalendae/kalendae.css" rel="stylesheet" type="text/css"/>
+<link href="./src/assets/css/welcome.css" rel="stylesheet" type="text/css"/>
+<link href="./src/assets/js/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="src/assets/css/prompt.css">
+<link rel="stylesheet" type="text/css" href="src/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="src/assets/js/skin/layer.css">
+<!--<link rel="stylesheet" type="text/css" href="src/assets/third-party/layui/css/layui.css">-->
+
+
+<div id="J-start-loading" class="loader">
+    <div class="pacman">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div id="app"></div>
+<style>
+
+    #_m_loading {
+        position: absolute !important;
+        left: 199px;
+        top: 44px;
+        z-index: 9999999999;
+    }
+
+    @media (max-width: 767px) {
+        #_m_loading {
+            left: 0;
+        }
+    }
+</style>
+<div id="_m_loading" class="m-loading" style="display: none">
+    <div class="cube1"></div>
+    <div class="cube2"></div>
+</div>
+<script src="./src/assets/js/jquery.js"></script>
+<script>
+    $.showLoading = function () {
+        $("#_m_loading").show();
+    };
+    $.hideLoading = function () {
+        $("#_m_loading").hide();
+    };
+</script>
+<script>
+    var GLOBAL_AUTHOR = localStorage['token'] ? localStorage['token'] : '';
+    $.ajaxSetup({
+        type: "POST",
+        dataType: 'JSON',
+        beforeSend: function (xhr, urlData) {
+            if (urlData.url.indexOf('?') == -1) {
+                urlData.url = urlData.url + ("?_key=" + window.location.hash.slice(3));
+                // urlData.url += `?_key=${window.location.hash.slice(3,)}`
+            } else {
+                // urlData.url += `&_key=${window.location.hash.slice(3,)}`
+                urlData.url = urlData.url + ("&_key=" + window.location.hash.slice(3));
+            }
+            xhr.setRequestHeader("authorization", localStorage['token'])
+        },
+    });
+
+</script>
+<script src="./src/assets/js/layer.js"></script>
+<script src="./src/assets/js/kalendae/kalendae.standalone.js"></script>
+<script src="./src/assets/js/datetimepicker/datetimepicker.js"></script>
+<script src="./src/assets/js/jquery-validate-1.15.js"></script>
+<script src="./src/assets/js/Validform.js"></script>
+<script src="./src/assets/js/page-plug.js"></script>
+
+<script src="./src/assets/js/prompt.js"></script>
+<script src="src/assets/js/echarts.min.js"></script>
+<!--<script src="src/assets/js/jquery-ui.min.js"></script>-->
+<script src="src/assets/js/PB-ui.js"></script>
+
+<script src="src/assets/third-party/layui/layui.js"></script>
+<script src="src/assets/js/plupload.full.min.js"></script>
+<script src="src/assets/js/qrcode.min.js"></script>
+<script src="src/assets/js/html2canvas.js"></script>
+<!--<script src="static/ueditor/ueditor.config.js"></script>-->
+<!--<script src="static/ueditor/ueditor.all.min.js"></script>-->
+<!--<script src="static/ueditor/lang/zh-cn/zh-cn.js"></script>-->
+<script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=2.0&ak=fU6BW6x0g2q9ZyBGpx23Nk2vLSONRGaL&s=1"></script>
+<script src="./dist/main.js?v=1.0.9"></script>
+</body>
+
+</html>

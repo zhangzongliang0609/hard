@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>公告</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+        html {
+            font-family: "Microsoft YaHei", "Microsoft YaHei UI", "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            line-height: 1.5;
+            color: #000;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4, p, dl, dd, form {
+            margin: 0;
+        }
+
+        a {
+            background: transparent;
+            text-decoration: none;
+            color: #979797;
+        }
+
+        a:active, select:focus {
+            outline: 0;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            border: none;
+        }
+
+        em, i {
+            font-style: normal;
+        }
+
+        img {
+            border: none;
+            vertical-align: top;
+            max-width: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        td, th {
+            padding: 0;
+        }
+
+        ul, ol {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        textarea {
+            -webkit-appearance: none;
+            resize: none;
+            outline: none;
+            border: none
+        }
+
+        button, input {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: none;
+            outline: none;
+        }
+
+        input[type="text"], input[type="button"], input[type="submit"], input[type=password], input[type="reset"], input[type="date"] {
+            -webkit-appearance: none;
+        }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            overflow: auto;
+            cursor: pointer;
+            user-select: none;
+            transform: translate(0, 0);
+            box-sizing: border-box;
+            padding: 15px;
+        }
+        .top_title {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 30px;
+            margin-bottom: 10px;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        .top_char {
+            font-size: 14px;
+            line-height: 20px;
+        }
+        #notice_content {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        .ml-15 {
+            margin-left: 15px;
+        }
+        .c-4a4 {
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="top_info">
+        <div class="top_title"></div>
+        <div class="top_char"></div>
+    </div>
+    <div id="notice_content"></div>
+</div>
+</body>
+</html>
+<!--<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>-->
+<script src="../../src/assets/js/jquery.js"></script>
+<script>
+    // 获取页面url参数
+    function GetQueryString(name) {
+        var reg = new RegExp(name + "=([^&]*)(&|$)");
+        var r = window.location.search.match(reg);
+        return r && r[1];
+    }
+
+    $(function () {
+        var t = GetQueryString('token');
+        var id = GetQueryString('id') || '';
+        var url = GetQueryString('url');
+        if(id && t) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    msg_id: id
+                },
+                beforeSend:function (xhr) {
+                    xhr.setRequestHeader("authorization", t)
+                },
+            }).always(function (data) {
+                page.showPage(data)
+            })
+        }
+    });
+    var page = {
+        showPage: function (data) {
+//            console.log("data: ", data);
+            if (data) {
+                var con = document.querySelector("#notice_content");
+                con.innerHTML = data.html;
+                document.body.scrollTop = 0;
+                con.scrollTop = 0;
+                document.querySelectorAll('.top_title')[0].innerHTML = data.title || '';
+                document.querySelectorAll('.top_char')[0].innerHTML = this.getChar(data);
+            }
+        },
+        getCurrentTime: function () {
+            var date = new Date();
+            var y = (date.getFullYear());
+            var m = (date.getMonth() + 1);
+            m = m > 9 ? m : ('0' + m);
+            var d = date.getDate();
+            d = d > 9 ? d : ('0' + d);
+            var h = date.getHours();
+            h = h > 9 ? h : ('0' + h);
+            var mi = date.getMinutes();
+            mi = mi > 9 ? mi : ('0' + mi);
+            var s = date.getSeconds();
+            s = s > 9 ? s : ('0' + s);
+            return y + '-' + m + '-' + d + ' ' + h + ':' + mi + ':' + s;
+        },
+        getChar: function (data) {
+            // PC端预览用mtime
+//            return '作者：' + (data.author || '--') + '<span class="ml-15 c-4a4">' + (((data.pub_time || data.mtime) || '').slice(0, 16) || '--') + '</span>'
+            // 沟通最后，PC端预览只显示当前时间
+            return '作者：' + (data.author || '--') + '<span class="ml-15 c-4a4">' + (data.ctime ? data.ctime.slice(0, 16) : this.getCurrentTime()) + '</span>'
+        }
+    };
+</script>

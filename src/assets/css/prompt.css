@@ -1,0 +1,12 @@
+/* 新功能引导提示的样式 */
+#maskBg{width:0;height:0;position:absolute;left:0;top:0;right:0;bottom:0;z-index:10000!important;}
+#mask{width:0;height:0;position:absolute;z-index:1;border:0 solid #000;opacity:0.6;transition:all .3s;}
+#mask::before{content:"";// width:100px;// height:60px;width:100%;height:100%;border-radius:50%;border:100px solid #000;position:absolute;left:-100px;top:-100px;}
+#maskTitle{width:400px;height:300px;position:absolute;z-index:2;}
+#pointer{width:290px;height:70px;background-repeat:no-repeat;background-position:center center;}
+#mianWarn{width:360px;height:135px;padding-top:20px;position:relative;}
+#nextStep{display:block;width:80px;height:30px;margin:0 auto;line-height:28px;font-size:16px;text-align:center;border-radius:2px;border:1px solid #4de6cf;color:#4de6cf;}
+#warnData{height:65px;text-align:center;line-height:25px;color:#4de6cf;background-repeat:no-repeat;background-position:center;}
+#closeMaskWarn{font-size:18px;position:absolute;right:0;top:0;width:20px;height:20px;text-align:center;line-height:20px;font-weight:600;color:#FFF;}
+#outPointernerver{position:absolute;right:39%;// right:0;bottom:0;width:100px;text-align:center;line-height:20px;height:20px;font-size:14px;color:#FFF;}
+#outPointer{position:absolute;right:39%;bottom:0;width:80px;text-align:center;line-height:20px;height:20px;font-size:14px;color:#FFF;}
